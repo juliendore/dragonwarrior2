@@ -6,7 +6,6 @@ public class Character {
     private String name;
     private String type;
 
-//     Construct
     public Character(int id, String name, String type) {
         this.id = id;
         this.name = name;
@@ -45,6 +44,5 @@ public class Character {
                 ", type='" + type + '\'' +
                 '}';
     }
-
 
 }
