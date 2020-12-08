@@ -33,8 +33,8 @@ public class CharacterController {
     }
 
     @PutMapping(value = "/characters/{id}")
-    public Character updateOneCharacter(@PathVariable int id, @RequestBody String newName) {
-        characterDao.update(id, newName);
+    public Character updateOneCharacter(@PathVariable int id, @RequestBody Character newData) {
+        characterDao.update(id, newData);
         return characterDao.findById(id);
     }
 
