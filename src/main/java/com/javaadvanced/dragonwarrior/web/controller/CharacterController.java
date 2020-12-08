@@ -16,8 +16,7 @@ public class CharacterController {
     @Autowired
     private CharacterDao characterDao;
 
-    @RequestMapping(value = "/characters", method = RequestMethod.GET)
-
+    @GetMapping(value = "/characters")
     public List<Character> getAllCharacters() {
         return characterDao.findAll();
     }
@@ -27,20 +26,26 @@ public class CharacterController {
         return characterDao.findById(id);
     }
 
-//    @PostMapping(value = "/characters")
-//    public void addOneCharacter(@RequestBody Character character){
-//        characterDao.save(character);
-//    }
+    @DeleteMapping(value = "/characters/{id}")
+    public ResponseEntity<Void> deleteOneCharacter(@PathVariable int id) {
+        characterDao.delete(id);
+        return ResponseEntity.ok().build();
+    }
 
-    //    ajouter un personnage
-//    ResponseEntitty : permet de définir le code http retourné
+    @PutMapping(value = "/characters/{id}")
+    public Character updateOneCharacter(@PathVariable int id, @RequestBody String newName) {
+        characterDao.update(id, newName);
+        return characterDao.findById(id);
+    }
+
+    //  ajouter un personnage
+    //  ResponseEntitty : permet de définir le code http retourné
     @PostMapping(value = "/characters")
     public ResponseEntity<Void> addOneCharacter(@RequestBody Character character) {
-
         Character characterAdded = characterDao.save(character);
 
         if (characterAdded == null)
-//            204 No Content + header
+            //  204 No Content + header
             return ResponseEntity.noContent().build();
 
         URI location = ServletUriComponentsBuilder
@@ -48,7 +53,7 @@ public class CharacterController {
                 .path("/{id}")
                 .buildAndExpand(characterAdded.getId())
                 .toUri();
-//        Header built with characterAdded location
+        //  Header built with characterAdded location
         return ResponseEntity.created(location).build();
     }
 }

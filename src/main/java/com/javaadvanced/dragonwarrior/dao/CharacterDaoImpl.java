@@ -36,4 +36,17 @@ public class CharacterDaoImpl implements CharacterDao {
         characters.add(character);
         return character;
     }
+
+    public void delete(int id) {
+        characters.removeIf(character -> String.valueOf(character.getId()).equals(String.valueOf(id)));
+    }
+
+    public void update(int id, String newName) {
+        for (Character c : characters) {
+            if (c.getId() == id) {
+                c.setName(newName);
+                return;
+            }
+        }
+    }
 }
