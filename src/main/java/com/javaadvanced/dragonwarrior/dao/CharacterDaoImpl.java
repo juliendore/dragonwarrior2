@@ -3,8 +3,10 @@ package com.javaadvanced.dragonwarrior.dao;
 import com.javaadvanced.dragonwarrior.model.Character;
 import org.springframework.stereotype.Repository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 
 @Repository
@@ -24,18 +26,29 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     public Character findById(int id) {
-        for (Character character : characters) {
-            if (character.getId() == id) {
-                return character;
+        for (Character c : characters) {
+            if (c.getId() == id) {
+                return c;
             }
         }
         return null;
     }
 
     public Character save(Character character) {
-//        HERE ignore id pour la conformité des data
-        characters.add(character);
-        return character;
+
+        Character maxId = characters
+                .stream()
+                .max(Comparator.comparing(Character::getId))
+                .orElseThrow(NoSuchElementException::new);
+
+
+        System.out.println(maxId.getId());
+
+        Character newCharacter = new Character(maxId.getId() + 1, character.getName(), character.getType());
+
+        characters.add(newCharacter);
+
+        return newCharacter;
     }
 
     public boolean delete(int id) {
