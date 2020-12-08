@@ -33,12 +33,15 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     public Character save(Character character) {
+//        HERE ignore id pour la conformité des data
         characters.add(character);
         return character;
     }
 
-    public void delete(int id) {
-        characters.removeIf(character -> String.valueOf(character.getId()).equals(String.valueOf(id)));
+    public boolean delete(int id) {
+        var isRemoved = characters.removeIf(character -> String.valueOf(character.getId()).equals(String.valueOf(id)));
+
+        return isRemoved;
     }
 
     public void update(int id, Character newData) {

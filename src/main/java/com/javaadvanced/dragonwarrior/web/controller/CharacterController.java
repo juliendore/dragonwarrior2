@@ -28,7 +28,10 @@ public class CharacterController {
 
     @DeleteMapping(value = "/characters/{id}")
     public ResponseEntity<Void> deleteOneCharacter(@PathVariable int id) {
-        characterDao.delete(id);
+        var isRemoved = characterDao.delete(id);
+        if (!isRemoved) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().build();
     }
 
@@ -41,6 +44,7 @@ public class CharacterController {
     //  ajouter un personnage
     //  ResponseEntitty : permet de définir le code http retourné
     @PostMapping(value = "/characters")
+//    Gerer le doublon dans le DAO
     public ResponseEntity<Void> addOneCharacter(@RequestBody Character character) {
         Character characterAdded = characterDao.save(character);
 
