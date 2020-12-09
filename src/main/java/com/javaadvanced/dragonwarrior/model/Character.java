@@ -1,9 +1,16 @@
 package com.javaadvanced.dragonwarrior.model;
 
-public class Character {
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Représentation d'un personnage.")
+public class Character {
+    @ApiModelProperty(notes = "Identifiant unique du personnage", example = "1", required = true, position = 0)
     private int id;
+    @ApiModelProperty(notes = "Nom du personnage.", example = "Toto", required = true, position = 1)
     private String name;
+    @ApiModelProperty(notes = "Type du personnage.", example = "Wizard", required = true, position = 2)
     private String type;
 
     public Character(int id, String name, String type) {
