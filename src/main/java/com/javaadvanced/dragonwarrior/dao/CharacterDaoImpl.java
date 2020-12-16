@@ -68,10 +68,10 @@ public class CharacterDaoImpl implements CharacterDao {
     public boolean update(int id, Character newData) {
         for (Character c : characters) {
             if (c.getId() == id) {
-                if (newData.getName() != null) {
+                if (newData.getName() != null && newData.getName().length() > 0) {
                     c.setName(newData.getName());
                 }
-                if (newData.getType() != null) {
+                if (newData.getType() != null && newData.getType().length() > 0) {
                     c.setType(newData.getType());
                 }
                 return true;
