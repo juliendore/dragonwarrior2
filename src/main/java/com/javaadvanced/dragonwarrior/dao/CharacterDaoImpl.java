@@ -35,16 +35,24 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     public Character save(Character character) {
+        if (!characters.isEmpty()) {
 
-        Character maxId = characters
-                .stream()
-                .max(Comparator.comparing(Character::getId))
-                .orElseThrow(NoSuchElementException::new);
+            Character maxId = characters
+                    .stream()
+                    .max(Comparator.comparing(Character::getId))
+                    .orElseThrow(NoSuchElementException::new);
 
 
-        System.out.println(maxId.getId());
+            System.out.println(maxId.getId());
 
-        Character newCharacter = new Character(maxId.getId() + 1, character.getName(), character.getType());
+            Character newCharacter = new Character(maxId.getId() + 1, character.getName(), character.getType());
+
+            characters.add(newCharacter);
+
+            return newCharacter;
+        }
+
+        Character newCharacter = new Character(1, character.getName(), character.getType());
 
         characters.add(newCharacter);
 
@@ -57,7 +65,7 @@ public class CharacterDaoImpl implements CharacterDao {
         return isRemoved;
     }
 
-    public void update(int id, Character newData) {
+    public boolean update(int id, Character newData) {
         for (Character c : characters) {
             if (c.getId() == id) {
                 if (newData.getName() != null) {
@@ -66,8 +74,9 @@ public class CharacterDaoImpl implements CharacterDao {
                 if (newData.getType() != null) {
                     c.setType(newData.getType());
                 }
-                return;
+                return true;
             }
         }
+        return false;
     }
 }

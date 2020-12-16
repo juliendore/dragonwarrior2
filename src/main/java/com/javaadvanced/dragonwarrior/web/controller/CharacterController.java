@@ -27,6 +27,7 @@ public class CharacterController {
     @ApiOperation(value = "Récupère un personnage spécifique grâce à son ID.")
     @GetMapping(value = "/characters/{id}")
     public Character getOneCharacter(@ApiParam("ID du personnage à retourner.") @PathVariable int id) {
+//        Ajouter les reponse erreur en cas d'erreur dans l'exec des méthodes
         return characterDao.findById(id);
     }
 
@@ -43,6 +44,9 @@ public class CharacterController {
     @ApiOperation(value = "Met à jour un personnage spécifique grâce à son ID.")
     @PutMapping(value = "/characters/{id}")
     public Character updateOneCharacter(@ApiParam("ID du personnage à mettre à jour.") @PathVariable int id, @ApiParam("Nouvelles informations du personnage au format JSON.") @RequestBody Character newData) {
+
+        //        Ajouter les reponse erreur en cas d'erreur dans l'exec des méthodes
+
         characterDao.update(id, newData);
         return characterDao.findById(id);
     }
