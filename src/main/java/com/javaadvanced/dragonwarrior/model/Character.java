@@ -4,9 +4,17 @@ package com.javaadvanced.dragonwarrior.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @ApiModel(description = "Représentation d'un personnage.")
+@Entity
 public class Character {
     @ApiModelProperty(notes = "Identifiant unique du personnage", example = "1", required = true, position = 0)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ApiModelProperty(notes = "Nom du personnage.", example = "Toto", required = true, position = 1)
     private String name;
@@ -17,6 +25,10 @@ public class Character {
         this.id = id;
         this.name = name;
         this.type = type;
+    }
+
+    public Character() {
+
     }
 
     public int getId() {
